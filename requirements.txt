@@ -1,0 +1,11 @@
+scipy
+msise00
+geopy>=1.18
+numpy>=1.14.0
+astropy>=2.0.3
+apexpy>=1.0.3
+matplotlib>=2.1.2
+pyproj>=1.9.6
+pymap3d>=1.7.13
+skyfield>=1.16
+spacetrack>=0.13
