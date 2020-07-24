@@ -5,11 +5,24 @@ import pyproj
 from math import acos, sin, asin
 from skyfield.positionlib import position_from_radec
 from satellite_coordinates import satellite_coordinates
+import sys
 
+###### check python version, required >= 3.6
+if sys.version_info[0] != 3 or sys.version_info[1] < 6:
+    print("This script requires Python version >= 3.6")
+    sys.exit(1)
+######
+
+## INPUT
 # datetime to calculate ISS's position (latitude longitude altitude)
 input_datetime = datetime.datetime(year=2018, month=4, day=26,
                                    hour=2, minute=3, second=15,
                                    microsecond=575003)
+
+# Specification of the source position in the sky (equatorial coordinate system, J2000)
+ra_hours = 5.378/ 15.0  # or ra_hours = 47.0 / 60.0 + 30.0 / 3600.0
+# One hour of right ascension (1h) is 15°. Since 24x15°=360°, there are 24h of right ascension around the celestial equator.
+dec_degrees = -20.392
 
 ##
 
@@ -39,10 +52,6 @@ to = ts.utc(input_datetime.year, input_datetime.month, input_datetime.day, input
 ## Getting Source's direction vector from Equatorial (J2000) to ITRF/ECEF
 earth = 399  # NAIF code for the Earth center of mass
 
-# Specification of the source position in the sky (equatorial coordinate system, J2000)
-ra_hours = 5.378/ 15.0  # or ra_hours = 47.0 / 60.0 + 30.0 / 3600.0
-# One hour of right ascension (1h) is 15°. Since 24x15°=360°, there are 24h of right ascension around the celestial equator.
-dec_degrees = -20.392
 # distance is not important here
 Source = position_from_radec(ra_hours, dec_degrees, t=to, center=earth, distance=0.000045, epoch=ts.J2000)
 # input ra is in hours, dec in degrees
